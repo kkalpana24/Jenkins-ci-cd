@@ -50,7 +50,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>jenkinsCICD</finalName>
+		<finalName>jenkinsCiCd</finalName>
 	</build>
 
 </project>
