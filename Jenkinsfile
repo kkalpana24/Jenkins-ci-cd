@@ -1,3 +1,4 @@
+/*
 pipeline{
     agent any
     tools{
@@ -7,7 +8,8 @@ pipeline{
 
         stage("SCM Checkout"){
             steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kkalpana24/Jenkins-ci-cd.git']])
+                checkout scmGit(branches: [[name: '*//*
+main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kkalpana24/Jenkins-ci-cd.git']])
             }
         }
 
@@ -21,7 +23,9 @@ pipeline{
 
         stage("Deploy to Container"){
             steps{
-                deploy adapters: [tomcat9(credentialsId: 'tomcat-pwd', path: '', url: 'http://localhost:9090/')], contextPath: 'jenkinsCiCd', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-pwd', path: '', url: 'http://localhost:9090/')], contextPath: 'jenkinsCiCd', war: '** /*
+*/
+/*.war'
             }
         }
     }
@@ -37,4 +41,4 @@ pipeline{
 </html>''', mimeType: 'text/html', replyTo: 'saiomray2018@gmail.com', subject: 'Pipeline Status : ${BUILD_NUMBER}', to: 'saiomray2018@gmail.com'
         }
     }
-}
+} */

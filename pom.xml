@@ -11,7 +11,7 @@
 	<groupId>com.practice</groupId>
 	<artifactId>jenkin-ci-cd</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>jenkin-ci-cd</name>
 	<description>Jenkin CI CD</description>
 	<properties>
