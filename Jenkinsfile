@@ -1,4 +1,3 @@
-/*
 pipeline{
     agent any
     tools{
@@ -8,11 +7,17 @@ pipeline{
 
         stage("SCM Checkout"){
             steps{
-                checkout scmGit(branches: [[name: '*//*
-main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kkalpana24/Jenkins-ci-cd.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kkalpana24/Jenkins-ci-cd.git']])
             }
         }
 
+        environment{
+            APP_NAME = "spring-docker-cicd"
+            RELEASE_NO = "1.0.0"
+            DOCKER_USER = "kkalpana82"
+            IMAGE_NAME = "${DOCKER_USER}"+"/"+"${APP_NAME}"
+            IMAGE_TAG = "${RELEASE_NO}-${BUILD_NUMBER}"
+        }
         stage("Build Process"){
             steps{
                 script{
@@ -21,11 +26,19 @@ main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kkalpana2
             }
         }
 
-        stage("Deploy to Container"){
+        stage("Build Image"){
             steps{
-                deploy adapters: [tomcat9(credentialsId: 'tomcat-pwd', path: '', url: 'http://localhost:9090/')], contextPath: 'jenkinsCiCd', war: '** /*
-*/
-/*.war'
+                script{
+                    sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                }
+            }
+        }
+        stage("Deploy Image to Hub"){
+            steps{
+                withCredentials([string(credentialsId: 'dp', variable: 'dp')]) {
+                 sh 'docker login -u kkalpana82 -p ${dp}'
+                 sh 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
+                }
             }
         }
     }
@@ -41,4 +54,4 @@ main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kkalpana2
 </html>''', mimeType: 'text/html', replyTo: 'saiomray2018@gmail.com', subject: 'Pipeline Status : ${BUILD_NUMBER}', to: 'saiomray2018@gmail.com'
         }
     }
-} */
+}
