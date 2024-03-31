@@ -3,6 +3,13 @@ pipeline{
     tools{
         maven "maven"
     }
+    environment{
+            APP_NAME = "spring-docker-cicd"
+            RELEASE_NO = "1.0.0"
+            DOCKER_USER = "kkalpana82"
+            IMAGE_NAME = "${DOCKER_USER}"+"/"+"${APP_NAME}"
+            IMAGE_TAG = "${RELEASE_NO}-${BUILD_NUMBER}"
+    }
     stages{
 
         stage("SCM Checkout"){
@@ -11,13 +18,6 @@ pipeline{
             }
         }
 
-        environment{
-            APP_NAME = "spring-docker-cicd"
-            RELEASE_NO = "1.0.0"
-            DOCKER_USER = "kkalpana82"
-            IMAGE_NAME = "${DOCKER_USER}"+"/"+"${APP_NAME}"
-            IMAGE_TAG = "${RELEASE_NO}-${BUILD_NUMBER}"
-        }
         stage("Build Process"){
             steps{
                 script{
